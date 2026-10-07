@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Annie Hunter · Software Engineer</title>
+<meta name="description" content="Annie Hunter is a software engineer and technical utility player: internal tools, scrapers, API integrations, RevOps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* ---------- Colors: change these to restyle the whole page ---------- */
+:root {
+  --bg: #F6F7F9;
+  --text: #101418;
+  --muted: #5A626D;
+  --line: #D5D9DF;
+  --card: #FFFFFF;
+  --card-line: #E3E6EB;
+  --accent: #00A892;       /* seafoam teal: big stat numbers */
+  --accent-dark: #00756A;  /* darker teal: small labels and link hover */
+  --footer: #06302C;
+  --head: 'Gabarito', sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+a { color: var(--text); }
+a:hover { color: var(--accent-dark); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 4px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.kicker { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-dark); }
+.pill { display: inline-block; padding: 13px 24px; border-radius: 999px; border: 1px solid #C5CAD2; font-weight: 700; font-size: 15px; text-decoration: none; }
+.pill.solid { background: var(--text); border-color: var(--text); color: #fff; }
+.pill.solid:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 24px 0; }
+.name { font-family: var(--head); font-weight: 800; font-size: 22px; }
+nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; font-size: 15px; font-weight: 600; }
+nav a { text-decoration: none; padding: 12px 0; }
+nav a.pill { padding: 10px 18px; font-weight: 600; }
+
+.hero { padding: 88px 0 80px; }
+h1 { margin: 20px 0 0; font-family: var(--head); font-size: clamp(38px, 6vw, 76px); line-height: 1.06; letter-spacing: -.025em; font-weight: 800; max-width: 960px; }
+.old { color: #8A929D; background: linear-gradient(currentColor, currentColor) no-repeat 0 56% / 100% 3px; }
+.new { display: inline-block; }
+.lead { margin: 28px 0 0; font-size: 22px; font-weight: 600; }
+.sub { margin: 10px 0 0; max-width: 620px; font-size: 19px; color: #454C56; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+.stats { display: flex; flex-wrap: wrap; gap: 16px; }
+.stat { flex: 1 1 280px; background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 32px; }
+.stat .num { font-family: var(--head); font-size: 68px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--accent); }
+.stat .what { margin-top: 16px; font-weight: 700; }
+.stat .how { margin-top: 6px; font-size: 15px; color: var(--muted); }
+
+section.block { padding: 112px 0 0; }
+h2 { margin: 0 0 24px; font-family: var(--head); font-size: 40px; line-height: 1.1; letter-spacing: -.02em; font-weight: 700; }
+.job { display: flex; flex-wrap: wrap; gap: 16px 40px; padding: 32px 0; border-top: 1px solid var(--line); }
+.job-side { flex: 0 0 200px; }
+.job-main { flex: 999 1 420px; min-width: 0; }
+.logo { display: block; width: 56px; height: 56px; border-radius: 12px; object-fit: cover; }
+.logo.bordered { border: 1px solid var(--card-line); }
+.logo.pad { padding: 9px; background: #fff; }
+.logo.pad img { display: block; width: 100%; height: 100%; }
+.co { margin-top: 14px; font-weight: 700; }
+.dates { font-size: 14px; color: var(--muted); }
+h3 { margin: 0; font-family: var(--head); font-size: 24px; font-weight: 700; line-height: 1.25; }
+.job ul { margin: 12px 0 0; padding-left: 20px; color: #343A43; }
+.job li + li { margin-top: 8px; }
+.stack { margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.edu-label { flex: 0 0 200px; font-weight: 700; }
+.edu p { margin: 6px 0 0; color: #343A43; }
+
+/* ---------- Quotes carousel ---------- */
+.stage { display: block; position: relative; width: 100%; height: 360px; margin: 32px 0 0; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; overflow: hidden; }
+.qcard { position: absolute; top: 20px; left: 50%; width: min(600px, 78%); height: 320px; padding: 36px; border-radius: 20px; background: var(--card); border: 1px solid var(--card-line); display: flex; flex-direction: column; justify-content: space-between; gap: 16px; opacity: 0; transition: transform .7s cubic-bezier(.3,.7,.2,1), opacity .7s ease; }
+.qtext { font-family: var(--head); font-weight: 600; line-height: 1.25; letter-spacing: -.01em; }
+.qby { font-size: 18px; font-weight: 600; color: var(--muted); }
+.qhint { margin-top: 8px; text-align: center; font-size: 14px; color: var(--muted); }
+.qall { margin-top: 32px; column-width: 300px; column-gap: 16px; }
+.qall .item { break-inside: avoid; margin: 0 0 16px; padding: 24px; border-radius: 16px; background: var(--card); border: 1px solid var(--card-line); }
+.qall .qtext { font-size: 19px; line-height: 1.3; }
+.qall .qby { margin-top: 12px; font-size: 16px; }
+.qback { margin-top: 8px; min-height: 44px; padding: 10px 22px; border-radius: 999px; border: 1px solid #C5CAD2; background: transparent; color: inherit; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+[hidden] { display: none !important; }
+
+footer { margin-top: 112px; padding: 72px 40px; border-radius: 20px 20px 0 0; background: var(--footer); color: #F1F7F5; }
+footer h2 { margin: 0; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.05; }
+footer p { margin: 16px 0 0; max-width: 520px; color: #B7D6D0; }
+footer .pill { margin-top: 32px; background: #F1F7F5; border-color: #F1F7F5; color: var(--footer); }
+footer .pill:hover { background: #fff; color: var(--footer); }
+
+/* ---------- Hero animation (skipped for visitors who prefer reduced motion) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .old { background-size: 0% 3px; animation: strike 1s cubic-bezier(.6,0,.2,1) .7s forwards; }
+  .new, .lead, .sub { opacity: 0; transform: translateY(12px); animation: rise .7s ease forwards; }
+  .new { animation-delay: 1.8s; } .lead { animation-delay: 2.2s; } .sub { animation-delay: 2.4s; }
+  @keyframes strike { to { background-size: 100% 3px; } }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="name">Annie Hunter</div>
+  <nav>
+    <a href="#resume">Resume</a>
+    <a href="#quotes">Quotes</a>
+    <a class="pill" href="changelog.html">Changelog version</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="kicker">Software engineer · Technical utility player</div>
+  <h1><span class="old">“We’ve always done it this way.”</span><br><span class="new">“We used to do it that way.”</span></h1>
+  <p class="lead">I’m Annie. I turn the first sentence into the second.</p>
+  <p class="sub">Scrapers, API integrations, internal tools, CRM build-outs, ad campaigns. If it needs doing and no one is quite sure how, hand it to me.</p>
+  <div class="cta">
+    <a class="pill solid" href="#resume">See the resume</a>
+    <a class="pill" href="changelog.html">Read it as a changelog</a>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><div class="num">$100K+</div><div class="what">Software spend avoided</div><div class="how">Built an in-house manufacturing ERP as one of two engineers, replacing paper workflows.</div></div>
+  <div class="stat"><div class="num">90%</div><div class="what">Of prospecting time freed</div><div class="how">Replaced manual lead research with an automated scraping and data pipeline.</div></div>
+  <div class="stat"><div class="num">$2.86</div><div class="what">Cost per app install</div><div class="how">Launched a company’s first Google Ads campaign: ~700 installs on ~$2K in 9 days.</div></div>
+</section>
+
+<section id="resume" class="block">
+  <h2>Experience</h2>
+  <div class="job">
+    <div class="job-side"><img class="logo bordered" src="images/nci-logo.jpg" alt="New Century Industries logo"><div class="co">New Century Industries</div><div class="dates">Jun 2026 to present</div></div>
+    <div class="job-main"><h3>Software Engineer</h3><ul><li>Saved $100K+ by building and deploying an in-house manufacturing ERP as one of two engineers, covering production, inventory, quality, purchasing and shipping.</li><li>Owned major features from concept through deployment as de facto product manager, UI/UX lead and engineer.</li></ul><div class="stack">TypeScript · React · Next.js · Node.js · PostgreSQL · Claude Code</div></div>
+  </div>
+  <div class="job">
+    <div class="job-side"><span class="logo bordered pad"><img src="images/halfcube-logo.svg" alt="Halfcube logo"></span><div class="co">Halfcube</div><div class="dates">Jul 2026 to present</div></div>
+    <div class="job-main"><h3>Founder</h3><ul><li>Freelance website creation and design.</li></ul></div>
+  </div>
+  <div class="job">
+    <div class="job-side"><img class="logo" src="images/fancy-logo.jpg" alt="Fancy logo"><div class="co">Fancy</div><div class="dates">Feb 2026 to May 2026</div></div>
+    <div class="job-main"><h3>Senior Growth Associate</h3><ul><li>Launched the company’s first Google Ads campaign: ~700 app installs on ~$2K spend ($2.86 CPI) in 9 days, across 10–20 A/B-tested variants and hand-coded HTML5 dynamic ads.</li><li>Rebuilt operations as the sole remaining business team member after a restructuring: recovered credentials and vendor relationships, and created structure.</li><li>Learned Synctera in under a week to support compliance during an acquired entity’s wind-down.</li></ul></div>
+  </div>
+  <div class="job">
+    <div class="job-side"><img class="logo" src="images/fancy-logo.jpg" alt="Fancy logo"><div class="co">Fancy</div><div class="dates">Aug 2025 to Feb 2026</div></div>
+    <div class="job-main"><h3>Revenue Operations Engineer, promoted from intern</h3><ul><li>Replaced manual prospecting (90% of the sales team’s time) with a web scraping, data wrangling and Excel VBA pipeline delivering thousands of leads.</li><li>Engineered a cross-platform API integration automated with GitHub Actions, removing copy-paste workflows at no added cost.</li><li>Owned the HubSpot CRM build-out: pipelines, dashboards, reports and website lead-capture forms.</li><li>Built a Python Reddit scraper and applied AI analysis to deliver competitive intelligence to leadership.</li></ul></div>
+  </div>
+  <div class="job">
+    <div class="job-side"><img class="logo bordered" src="images/nci-logo.jpg" alt="New Century Industries logo"><div class="co">New Century Industries</div><div class="dates">Jul 2025 to Aug 2025</div></div>
+    <div class="job-main"><h3>System Engineering Intern</h3><ul><li>Eliminated third-party label software by extending a Microsoft Access label-printing app with VBA and SQL for barcode workflows.</li><li>Went from no QuickBooks experience to owning its maintenance and troubleshooting.</li></ul></div>
+  </div>
+  <div class="job">
+    <div class="job-side"><img class="logo bordered" src="images/byu-logo.png" alt="Brigham Young University logo"><div class="co">Brigham Young University</div><div class="dates">May 2023 to Aug 2024</div></div>
+    <div class="job-main"><h3>Utilities Lead Intern</h3><ul><li>Processed ~300 monthly utility invoices from 9+ vendors and wrote the 30+ page operating manual for the workflow.</li><li>Operated and troubleshot the internal Python programs that parsed bills, reconciled data and automated entry.</li></ul></div>
+  </div>
+  <div class="job edu">
+    <div class="edu-label">Education</div>
+    <div class="job-main"><h3>Brigham Young University</h3><p>Business Management, 2025. Computer science coursework in C++ and Python; mathematics through Calculus III.</p></div>
+  </div>
+</section>
+
+<section id="quotes" class="block">
+  <div class="kicker">Bonus content</div>
+  <h2 style="margin: 10px 0 0">A few good lines</h2>
+  <div id="carousel">
+    <button type="button" class="stage" id="stage" aria-label="Show all quotes"></button>
+    <div class="qhint" id="qhint"></div>
+  </div>
+  <div id="allquotes" hidden>
+    <div class="qall" id="qall"></div>
+    <button type="button" class="qback" id="qback">Back to the carousel</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <h2>Thanks for stopping by.</h2>
+  <p>I’m always curious to hear what you’re working on. Cheers!</p>
+  <!-- EDIT ME: put your real LinkedIn profile link in the href below -->
+  <a class="pill" href="https://www.linkedin.com/in/annie-hunter">Connect on LinkedIn</a>
+</footer>
+
+</div>
+<script>
+// Quotes: edit this list to add, remove or reorder. Each entry is ["quote", "who, book"].
+var QUOTES = [
+ [
+  "Knowing what we don’t know is better than thinking we know what we don’t.",
+  "Philip Tetlock, Superforecasting"
+ ],
+ [
+  "Beliefs are hypotheses to be tested, not treasures to be guarded.",
+  "Philip Tetlock, Superforecasting"
+ ],
+ [
+  "Stay open to new data and be prepared to keep freshening up your knowledge.",
+  "Hans Rosling, Factfulness"
+ ],
+ [
+  "Reading is good, action is better.",
+  "Eric Ries, The Lean Startup"
+ ],
+ [
+  "When faced with a challenge, get smarter.",
+  "Ed Catmull, Creativity, Inc."
+ ],
+ [
+  "We are blind to our blindness.",
+  "Daniel Kahneman, Thinking, Fast and Slow"
+ ],
+ [
+  "There can be as much value in the blink of an eye as in months of rational analysis.",
+  "Malcolm Gladwell, Blink"
+ ],
+ [
+  "Modern work demands knowledge transfer: the ability to apply knowledge to new situations and different domains. Our most fundamental thought processes have changed to accommodate increasing complexity and the need to derive new patterns rather than rely only on familiar ones. Our conceptual classification schemes provide a scaffolding for connecting knowledge, making it accessible and flexible.",
+  "David Epstein, Range"
+ ],
+ [
+  "Quality is the best business plan.",
+  "Ed Catmull, Creativity, Inc."
+ ],
+ [
+  "It’s easier to invent the future than to predict it.",
+  "Brad Stone, The Everything Store"
+ ],
+ [
+  "When in doubt, simplify.",
+  "Eric Ries, The Lean Startup"
+ ],
+ [
+  "Success is not delivering a feature; success is learning how to solve the customer’s problem.",
+  "Eric Ries, The Lean Startup"
+ ],
+ [
+  "The most meaningful way to succeed is to help other people succeed.",
+  "Adam Grant"
+ ],
+ [
+  "Character is often confused with personality, but they’re not the same. Personality is your predisposition—your basic instincts for how to think, feel, and act. Character is your capacity to prioritize your values over your instincts.",
+  "Adam Grant, Hidden Potential"
+ ]
+];
+
+(function () {
+  var stage = document.getElementById('stage'), all = document.getElementById('qall');
+  var n = QUOTES.length, i = 0, open = false;
+  function el(tag, cls, text) { var e = document.createElement(tag); e.className = cls; if (text) e.textContent = text; return e; }
+  var cards = QUOTES.map(function (q) {
+    var len = q[0].length;
+    var card = el('span', 'qcard'), t = el('span', 'qtext', q[0]);
+    t.style.fontSize = len < 90 ? '28px' : len < 180 ? '22px' : len < 260 ? '18px' : '14.5px';
+    card.appendChild(t); card.appendChild(el('span', 'qby', q[1])); stage.appendChild(card);
+    var item = el('div', 'item'); item.appendChild(el('div', 'qtext', q[0])); item.appendChild(el('div', 'qby', q[1])); all.appendChild(item);
+    return card;
+  });
+  function place() {
+    cards.forEach(function (card, k) {
+      var d = (k - i) % n; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+      var near = Math.abs(d) <= 1, shift = Math.max(-2, Math.min(2, d)) * 62;
+      card.style.transform = 'translateX(-50%) translateX(' + shift + '%) scale(' + (d === 0 ? 1 : 0.86) + ')';
+      card.style.opacity = d === 0 ? 1 : near ? 0.45 : 0;
+      card.style.zIndex = d === 0 ? 3 : near ? 2 : 1;
+    });
+  }
+  function toggle() {
+    open = !open;
+    document.getElementById('carousel').hidden = open;
+    document.getElementById('allquotes').hidden = !open;
+  }
+  document.getElementById('qhint').textContent = n + ' quotes · click to see them all';
+  stage.addEventListener('click', toggle);
+  document.getElementById('qback').addEventListener('click', toggle);
+  place();
+  setInterval(function () { if (!open) { i = (i + 1) % n; place(); } }, 3000); // advances every 3 seconds
+})();
+</script>
+</body>
+</html>
